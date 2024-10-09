@@ -44,6 +44,7 @@
  (covergroup_declaration)
  (inline_covergroup)
  (covergroup_options_or_empty)
+ (inline_constraints_or_empty)
  (bins_or_empty)
  (cross_item_or_null)
  (package_body_compile_if_item)
