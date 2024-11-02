@@ -39,6 +39,7 @@
  (enum_declaration)
  (constraint_declaration)
  ; (constraint_block)
+ (inline_constraints_or_empty)
  (constraint_body_item)
  ; (unique_constraint_item)
  (covergroup_declaration)
