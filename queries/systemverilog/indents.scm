@@ -24,10 +24,29 @@
  (specify_block)
  (type_declaration)
  (class_constructor_declaration)
- (seq_block)
- (par_block)
+ ;(seq_block)
+ ;(par_block)
  "{"
  ] @indent.begin
+
+; normally, begin/end are inside the declaration mentioned before
+; only begin/end inside function/task/fork directly need mentioned here
+(task_body_declaration
+  (statement_or_null
+    (statement
+      (statement_item
+        (seq_block) @indent.begin))))
+
+(function_statement
+  (statement
+    (statement_item
+      (seq_block) @indent.begin)))
+
+(par_block
+  (statement_or_null
+    (statement
+      (statement_item
+        (seq_block) @indent.begin))))
 
 [
  "end"
@@ -54,6 +73,11 @@
  (list_of_arguments)
  (list_of_actual_arguments)
  ] @indent.begin
+
+; (conditional_statement
+;  "else" 
+;  .
+;  "if" @indent.dedent )
 
 ; ([
 ;   (function_declaration)

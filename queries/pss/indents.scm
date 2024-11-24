@@ -10,9 +10,16 @@
  (exec_block)
  (procedural_function)
  (import_class_decl)
- (procedural_stmt)
- ; (procedural_sequence_block_stmt)
- ; (procedural_match_stmt)
+ ; procedural_stmt is too large scope,
+ ; some sentence inside procedural_stmt could not perform indent
+ ; such as procedural_break_stmt
+ ; don't use procedural_stmt directly
+ (procedural_repeat_stmt)
+ (procedural_foreach_stmt)
+ (procedural_if_else_stmt)
+ (procedural_match_stmt)
+ (procedural_compile_if_stmt)
+ 
  (component_declaration)
  (object_bind_item_or_list)
  (labeled_activity_stmt)
@@ -69,6 +76,6 @@
 [
  "else"
  "}"
- ] @indent.branch @indent.end
+ ] @indent.branch
 
 
