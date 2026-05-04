@@ -120,37 +120,6 @@ return {
     },
   },
   {
-    "akinsho/toggleterm.nvim",
-    version = "*",
-    cmd = { "ToggleTerm", "TermExec" },
-    keys = {
-      { "<leader>r", "<Cmd>ToggleTerm<CR>", desc = "Toggle terminal" },
-    },
-    opts = {
-      direction = "horizontal",
-      size = 12,
-      shade_terminals = false,
-    },
-    config = function(_, opts)
-      require("toggleterm").setup(opts)
-
-      vim.api.nvim_create_autocmd("TermOpen", {
-        pattern = "term://*toggleterm#*",
-        callback = function(event)
-          local function tmap(lhs, rhs)
-            vim.keymap.set("t", lhs, rhs, { buffer = event.buf, silent = true })
-          end
-
-          tmap("<Esc>", "<Cmd>ToggleTerm<CR>")
-          tmap("<C-h>", "<Cmd>wincmd h<CR>")
-          tmap("<C-j>", "<Cmd>wincmd j<CR>")
-          tmap("<C-k>", "<Cmd>wincmd k<CR>")
-          tmap("<C-l>", "<Cmd>wincmd l<CR>")
-        end,
-      })
-    end,
-  },
-  {
     "christoomey/vim-tmux-navigator",
     cmd = {
       "TmuxNavigateLeft",

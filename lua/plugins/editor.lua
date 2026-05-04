@@ -20,29 +20,6 @@ end
 
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    lazy = false,
-    build = ":TSUpdate",
-    opts = {
-      sync_install = false,
-      auto_install = false,
-      highlight = { enable = true },
-      indent = { enable = true },
-    },
-    config = function(_, opts)
-      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-
-      register_local_parser(parser_config, "pss", "~/nvim_github/tree-sitter-pss", "pss")
-      register_local_parser(parser_config, "systemverilog", "~/nvim_github/tree-sitter-systemverilog", "systemverilog")
-
-      vim.treesitter.language.register("pss", { "pss" })
-      vim.treesitter.language.register("systemverilog", { "systemverilog", "verilog" })
-
-      require("nvim-treesitter.configs").setup(opts)
-    end,
-  },
-
-  {
     "andymass/vim-matchup",
     event = { "BufReadPost", "BufNewFile" },
     init = function()

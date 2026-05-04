@@ -13,38 +13,43 @@ local function lualine_opts()
     grey = "#a0a1a7",
   }
 
+  local function bold(color)
+    return { fg = color, gui = "bold" }
+  end
+
   local function buffer_not_empty()
-    return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
+    return vim.fn.expand("%:t") ~= ""
   end
 
   local function wide_enough()
     return vim.fn.winwidth(0) > 80
   end
 
+  local mode_colors = {
+    n = colors.magenta,
+    i = colors.green,
+    v = colors.blue,
+    ["\22"] = colors.blue,
+    V = colors.blue,
+    c = colors.magenta,
+    no = colors.magenta,
+    s = colors.orange,
+    S = colors.orange,
+    ["\19"] = colors.orange,
+    ic = colors.yellow,
+    R = colors.violet,
+    Rv = colors.violet,
+    cv = colors.magenta,
+    ce = colors.magenta,
+    r = colors.cyan,
+    rm = colors.cyan,
+    ["r?"] = colors.cyan,
+    ["!"] = colors.magenta,
+    t = colors.magenta,
+  }
+
   local function mode_color()
-    local map = {
-      n = colors.magenta,
-      i = colors.green,
-      v = colors.blue,
-      ["\22"] = colors.blue,
-      V = colors.blue,
-      c = colors.magenta,
-      no = colors.magenta,
-      s = colors.orange,
-      S = colors.orange,
-      ["\19"] = colors.orange,
-      ic = colors.yellow,
-      R = colors.violet,
-      Rv = colors.violet,
-      cv = colors.magenta,
-      ce = colors.magenta,
-      r = colors.cyan,
-      rm = colors.cyan,
-      ["r?"] = colors.cyan,
-      ["!"] = colors.magenta,
-      t = colors.magenta,
-    }
-    return { fg = map[vim.fn.mode()] or colors.fg }
+    return { fg = mode_colors[vim.api.nvim_get_mode().mode] or colors.fg }
   end
 
   return {
@@ -65,16 +70,16 @@ local function lualine_opts()
       lualine_b = {},
       lualine_c = {
         { "mode", color = mode_color, padding = { right = 1 } },
-        { "filetype", cond = buffer_not_empty, color = { fg = colors.green, gui = "bold" } },
-        { "filename", color = { fg = colors.magenta, gui = "bold" } },
+        { "filetype", cond = buffer_not_empty, color = bold(colors.green) },
+        { "filename", color = bold(colors.magenta) },
         { "location" },
-        { "progress", color = { fg = colors.fg, gui = "bold" } },
+        { "progress", color = bold(colors.fg) },
         { function() return "%=" end },
       },
       lualine_x = {
-        { "o:encoding", fmt = string.upper, cond = wide_enough, color = { fg = colors.green, gui = "bold" } },
-        { "fileformat", fmt = string.upper, icons_enabled = false, color = { fg = colors.green, gui = "bold" } },
-        { "branch", icon = "", color = { fg = colors.violet, gui = "bold" } },
+        { "o:encoding", fmt = string.upper, cond = wide_enough, color = bold(colors.green) },
+        { "fileformat", fmt = string.upper, icons_enabled = false, color = bold(colors.green) },
+        { "branch", icon = "", color = bold(colors.violet) },
         {
           "diff",
           symbols = { added = " ", modified = "󰝤 ", removed = " " },
