@@ -19,7 +19,7 @@ require("lazy").setup({
     { import = "plugins" },
   },
   defaults = {
-    lazy = false,
+    lazy = true,
     version = false,
   },
   install = { colorscheme = { "solarized", "tokyonight" } },
@@ -27,7 +27,17 @@ require("lazy").setup({
   rocks = { enabled = false },
   performance = {
     rtp = {
-      disabled_plugins = {},
+      disabled_plugins = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        "netrwPlugin",
+        "rplugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
     },
   },
 })

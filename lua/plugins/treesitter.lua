@@ -1,7 +1,10 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   branch = "main",
-  lazy = false,
+  event = {
+    "BufReadPost",
+    "BufNewFile",
+  },
   dependencies = {
     "neovim-treesitter/treesitter-parser-registry",
   },
@@ -15,17 +18,23 @@ return {
 
     local group = vim.api.nvim_create_augroup("UserTreesitterMain", { clear = true })
 
+    local function start_treesitter(buf)
+      pcall(vim.treesitter.start, buf)
+
+      local ft = vim.bo[buf].filetype
+      if ft == "systemverilog" or ft == "verilog" or ft == "pss" then
+        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end
+    end
+
     vim.api.nvim_create_autocmd("FileType", {
       group = group,
       pattern = "*",
       callback = function(ev)
-        pcall(vim.treesitter.start, ev.buf)
-
-        local ft = vim.bo[ev.buf].filetype
-        if ft == "systemverilog" or ft == "verilog" or ft == "pss" then
-          vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-        end
+        start_treesitter(ev.buf)
       end,
     })
+
+    start_treesitter(vim.api.nvim_get_current_buf())
   end,
 }

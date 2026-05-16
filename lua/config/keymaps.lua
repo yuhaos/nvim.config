@@ -40,38 +40,3 @@ keymap.set("n", "<leader>q", ":q<cr>")
 
 keymap.set("n", "zm", "zM")
 keymap.set("n", "zr", "zR")
-
--- Plugin mappings.
-local telescope = require("telescope.builtin")
-
-local function get_git_root(start_dir)
-  local dot_git_path = vim.fn.finddir(".git", start_dir .. ";")
-  if dot_git_path == "" then
-    return nil
-  end
-
-  return vim.fn.fnamemodify(dot_git_path, ":h")
-end
-
-keymap.set("n", "<C-i>", telescope.buffers, silent)
-keymap.set("n", "<C-p>", function()
-  telescope.find_files({ cwd = get_git_root(vim.loop.cwd()) })
-end, silent)
-keymap.set("n", "<C-g>", function()
-  telescope.live_grep({ cwd = get_git_root(vim.loop.cwd()) })
-end, silent)
-keymap.set("n", "<leader>e", function()
-  telescope.find_files({ cwd = get_git_root(".") or "%:p:h" })
-end, silent)
-keymap.set("n", "<leader>g", function()
-  telescope.live_grep({ cwd = get_git_root(".") or "%:p:h" })
-end, silent)
-
-keymap.set("n", "<C-h>", ":TmuxNavigateLeft<CR>", silent)
-keymap.set("n", "<C-j>", ":TmuxNavigateDown<CR>", silent)
-keymap.set("n", "<C-k>", ":TmuxNavigateUp<CR>", silent)
-keymap.set("n", "<C-l>", ":TmuxNavigateRight<CR>", silent)
-keymap.set("n", "<C-\\>", ":TmuxNavigatePrevious<CR>", silent)
-
-keymap.set("n", "<leader>t", ":NvimTreeToggle<CR>", silent)
-keymap.set("n", "<leader>+", ":NvimTreeResize +10<CR>", silent)
