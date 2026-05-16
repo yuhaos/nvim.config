@@ -1,10 +1,7 @@
--- lualine configure
-
 return {
-  'nvim-lualine/lualine.nvim',
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
-  options = {
-    theme = 'solarized_light'
-  },
+  "nvim-lualine/lualine.nvim",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  opts = function()
+    return require("config.evillualine")
+  end,
 }
-
