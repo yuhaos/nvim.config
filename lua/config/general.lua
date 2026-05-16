@@ -12,7 +12,7 @@ opt.number = true
 opt.isfname = opt.isfname + "{,},@"
 
 -- Set to auto read when a file is chagned from the otuside
-opt.autoread = ture
+opt.autoread = true
 
 -- Set 8 lines tothe cursor - when moving vertically using j/k
 opt.scrolloff = 8
@@ -106,4 +106,3 @@ opt.fillchars = "vert: "
 
 -- remember info about open buffers on close
 -- opt.shada = "20,<50,s10"
-

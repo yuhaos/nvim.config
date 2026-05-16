@@ -5,6 +5,13 @@
 -- map the leader key firstly, it might be used by many plugins
 vim.g.mapleader = ","
 
+-- Disable optional remote providers that are not used by this config. This
+-- avoids checkhealth warnings for missing language host packages.
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 -- enable this very early to avoid nvim loading the builtin tree
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -33,7 +40,6 @@ require("config.general")
 
 require("config.lazy")
 require('lualine').setup(require('config.evillualine'))
-require('toggleterm').setup()
 require('nvim-tree').setup {
   git = { enable = false },
   filters = { dotfiles = true }

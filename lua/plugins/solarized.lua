@@ -8,12 +8,12 @@ return {
     styles = {
       comments = { italic = true, bold = false},
       functions = { italic = true },
-      variables = { italic = fase},
+      variables = { italic = false},
     },
     transparent = {
       enabled = true,         -- Master switch to enable transparency
       pmenu = true,           -- Popup menu (e.g., autocomplete suggestions)
-      normal = ture,          -- Main editor window background
+      normal = true,          -- Main editor window background
       normalfloat = true,     -- Floating windows
       neotree = false,         -- Neo-tree file explorer
       nvimtree = false,        -- Nvim-tree file explorer

@@ -109,12 +109,4 @@ keymap.set("n", "<C-\\>", ":TmuxNavigatePrevious<CR>", {silent = true})
 keymap.set("n", "<leader>t", ":NvimTreeToggle<CR>", {silent = true})
 keymap.set("n", "<leader>+", ":NvimTreeResize +10<CR>", {silent = true})
 
-
-keymap.set("n", "<leader>r", "<Cmd>ToggleTerm<CR>", {})
-keymap.set("t", "<ESC>", "<Cmd>ToggleTerm<CR>", {})
-keymap.set("t", "<C-h>", "<Cmd>wincmd h<CR>", {})
-keymap.set("t", "<C-j>", "<Cmd>wincmd j<CR>", {})
-keymap.set("t", "<C-k>", "<Cmd>wincmd k<CR>", {})
-keymap.set("t", "<C-l>", "<Cmd>wincmd l<CR>", {})
-
 -- EOF
