@@ -14,20 +14,7 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.filetype.add({
-  extension = {
-    v = "systemverilog",
-    vh = "systemverilog",
-    vp = "systemverilog",
-    sv = "systemverilog",
-    svi = "systemverilog",
-    svh = "systemverilog",
-    svp = "systemverilog",
-    sva = "systemverilog",
-    pss = "pss",
-  },
-})
-
+require("config.filetypes")
 require("config.general")
 require("config.lazy")
 require("config.snippets").setup()
