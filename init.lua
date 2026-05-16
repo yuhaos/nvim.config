@@ -104,41 +104,7 @@ require("telescope").setup {
 -- load_extension, somewhere after setup function:
 require('telescope').load_extension('fzf')
 
-require("luasnip.loaders.from_vscode").lazy_load()
-require("luasnip.loaders.from_vscode").load_standalone({path = "~/.config/nvim/snippets/systemverilog.json"})
-require("luasnip").env_namespace("MY", {vars = {
-  USER_NAME = function()
-    return os.getenv("USER")
-  end,
-  USER_HOME = function()
-    return os.getenv("HOME")
-  end,
-  FILE_TYPE = function ()
-    return vim.fn.expand("%:e")
-  end
-}})
-require("luasnip").setup({
-  region_check_events = "CursorHold,InsertLeave",
-  delete_check_events = "TextChanged,InsertEnter",
-})
-
-require("nvim-treesitter").setup()
-local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-parser_config.pss = {
-  install_info = {
-    url = "https://github.com/yuhaos/tree-sitter-pss.git", -- local path or git repo
-    files = {"src/parser.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
-  },
-  filetype = "pss", -- if filetype does not match the parser name
-}
-parser_config.systemverilog = {
-  install_info = {
-    -- using local path, we need to rename the function name from tree-sitter-verilog to tree-sitter-systemverilog
-    url = "~/nvim_github/tree-sitter-systemverilog", -- local path or git repo
-    files = {"src/parser.c"}, -- note that some parsers also require src/scanner.c or src/scanner.cc
-  },
-  filetype = "systemverilog", -- if filetype does not match the parser name
-}
+require("config.snippets").setup()
 
 -- keymaps, set is after all plugin are loaded since some key mapping need the plugin's setup
 require("config.keymaps")

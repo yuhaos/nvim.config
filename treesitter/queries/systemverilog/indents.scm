@@ -19,6 +19,7 @@
  (conditional_statement)
  (loop_statement)
  (case_statement)
+ (case_item)
  (clocking_declaration)
  (enum_base_type)
  (specify_block)

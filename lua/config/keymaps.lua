@@ -81,7 +81,6 @@ keymap.set("n", "zr", "zR")
 -------------------------------------------
 -- some plusargs need specified setting
 local tb = require('telescope.builtin')
-local ls = require('luasnip')
 -- check wheter we are inside git repo
 local function get_git_root(start_dir)
   local dot_git_path = vim.fn.finddir(".git", start_dir .. ";")
@@ -110,19 +109,6 @@ keymap.set("n", "<C-\\>", ":TmuxNavigatePrevious<CR>", {silent = true})
 keymap.set("n", "<leader>t", ":NvimTreeToggle<CR>", {silent = true})
 keymap.set("n", "<leader>+", ":NvimTreeResize +10<CR>", {silent = true})
 
--- super-TAB, for luasnip
-keymap.set("i", "<TAB>", ls.expand_or_jump, {silent = true})
-keymap.set("s", "<TAB>", function() ls.jump(1) end, {silent = true})
-
-keymap.set({"i", "s"}, "<C-g>", function()
-  if ls.choice_active() then
-    ls.change_choice(1)
-    return true
-  end
-  -- local r_key = vim.api.nvim_replace_termcodes("<C-n>", true, false, true)
-  -- vim.api.nvim_feedkeys(r_key, "i", true)
-end, {silent = true}
-)
 
 keymap.set("n", "<leader>r", "<Cmd>ToggleTerm<CR>", {})
 keymap.set("t", "<ESC>", "<Cmd>ToggleTerm<CR>", {})
