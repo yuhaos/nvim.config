@@ -36,13 +36,79 @@ endif
 " Also include ///, used for Doxygen.
  setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
 
-" When the matchit plugin is loaded, this makes the % command skip parens and
-" braces in comments properly.
-if !exists("b:match_words")
-  let b:match_words = '^\s*#\s*if\(\|def\|ndef\)\>:^\s*#\s*elif\>:^\s*#\s*else\>:^\s*#\s*endif\>'
-  let b:match_skip = 's:comment\|string\|character\|special'
-  let b:undo_ftplugin ..= " | unlet! b:match_skip b:match_words"
+" Make match-up skip delimiters in PSS comments and strings without relying on
+" tree-sitter matchup queries or Vim syntax highlighting.
+if !exists("*PssMatchSkip")
+  function! PssMatchSkip(lnum, col) abort
+    let l:in_block_comment = v:false
+    let l:target_lnum = a:lnum
+    let l:target_idx = a:col - 1
+
+    for lnum in range(1, l:target_lnum)
+      let l:line = getline(lnum)
+      let l:line_len = strlen(l:line)
+      let l:limit = lnum == l:target_lnum ? min([l:line_len, a:col]) : l:line_len
+      let l:idx = 0
+      let l:in_string = v:false
+
+      while l:idx < l:limit
+        if lnum == l:target_lnum && l:idx >= l:target_idx
+          return l:in_block_comment || l:in_string
+        endif
+
+        let l:pair = strpart(l:line, l:idx, 2)
+
+        if l:in_block_comment
+          if l:pair ==# "*/"
+            let l:in_block_comment = v:false
+            let l:idx += 2
+          else
+            let l:idx += 1
+          endif
+          continue
+        endif
+
+        if l:in_string
+          if strpart(l:line, l:idx, 1) ==# "\\"
+            let l:idx += 2
+          elseif strpart(l:line, l:idx, 1) ==# '"'
+            let l:in_string = v:false
+            let l:idx += 1
+          else
+            let l:idx += 1
+          endif
+          continue
+        endif
+
+        if l:pair ==# "//"
+          if lnum == l:target_lnum && l:target_idx >= l:idx
+            return v:true
+          endif
+          break
+        elseif l:pair ==# "/*"
+          let l:in_block_comment = v:true
+          if lnum == l:target_lnum && l:target_idx >= l:idx
+            return v:true
+          endif
+          let l:idx += 2
+        elseif strpart(l:line, l:idx, 1) ==# '"'
+          let l:in_string = v:true
+          if lnum == l:target_lnum && l:target_idx >= l:idx
+            return v:true
+          endif
+          let l:idx += 1
+        else
+          let l:idx += 1
+        endif
+      endwhile
+    endfor
+
+    return v:false
+  endfunction
 endif
+
+let b:match_skip = 'PssMatchSkip(line("."), col("."))'
+let b:undo_ftplugin ..= " | unlet! b:match_skip"
 
 " Win32 and GTK can filter files in the browse dialog
 if (has("gui_win32") || has("gui_gtk")) && !exists("b:browsefilter")
