@@ -12,6 +12,7 @@ opt.wildcharm = ('\t'):byte()
 opt.wildignore = "*.o,*.pyc,*./simv.daidir/*,*/csrc/*,*/simv.vdb/*"
 opt.ruler = true
 opt.cmdheight = 1
+opt.laststatus = 3
 opt.hidden = true
 opt.backspace = "eol,start,indent"
 opt.whichwrap = "<,>,h,l"
