@@ -18,9 +18,13 @@ return {
     local group = vim.api.nvim_create_augroup("UserTreesitterMain", { clear = true })
 
     local function start_treesitter(buf)
+      local ft = vim.bo[buf].filetype
+      if ft == "verilog" or ft == "systemverilog" or ft == "verilog_systemverilog" then
+        return
+      end
+
       pcall(vim.treesitter.start, buf)
 
-      local ft = vim.bo[buf].filetype
       if ft == "pss" then
         vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
       end
