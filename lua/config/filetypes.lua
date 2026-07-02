@@ -20,3 +20,5 @@ end
 vim.filetype.add({
   extension = extension,
 })
+
+

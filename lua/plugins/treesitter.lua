@@ -13,7 +13,6 @@ return {
       install_dir = vim.fn.stdpath("config") .. "/treesitter",
     })
 
-    vim.treesitter.language.register("systemverilog", { "systemverilog", "verilog" })
     vim.treesitter.language.register("pss", { "pss" })
 
     local group = vim.api.nvim_create_augroup("UserTreesitterMain", { clear = true })
@@ -22,7 +21,7 @@ return {
       pcall(vim.treesitter.start, buf)
 
       local ft = vim.bo[buf].filetype
-      if ft == "systemverilog" or ft == "verilog" or ft == "pss" then
+      if ft == "pss" then
         vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
       end
     end
